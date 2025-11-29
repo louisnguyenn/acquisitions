@@ -1,6 +1,6 @@
 // setting up express application with middleware
+import logger from '#config/logger.js';
 import express from 'express';
-import logger from "./config/logger.js";
 
 const app = express();
 
