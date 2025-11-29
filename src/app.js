@@ -1,5 +1,6 @@
 // setting up express application with middleware
 import logger from '#config/logger.js';
+import authRoutes from '#routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -24,5 +25,19 @@ app.get('/', (req, res) => {
   logger.info('Hello from Acquisitions API');
   res.status(200).send('Hello, from Acquisitions!');
 });
+
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
+app.get('/api/', (req, res) => {
+  res.status(200).json({ message: 'Acquisitions API is running!' });
+});
+
+app.use('/api/auth', authRoutes); // auth routes
 
 export default app;
