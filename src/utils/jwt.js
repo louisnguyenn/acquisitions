@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_EXPIRES_IN = '1d';
 
+// utility functions for signing and verifying JWT tokens
 export const jwttokwn = {
+  // sign a JWT token
   sign: (payload) => {
     try {
       return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
@@ -13,6 +15,7 @@ export const jwttokwn = {
       throw new Error('Failed to authenticate JWT token');
     }
   },
+  // verify a JWT token
   verify: (token) => {
     try {
       return jwt.verify(token, JWT_SECRET);
