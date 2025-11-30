@@ -3,12 +3,14 @@ import { createUser } from '#services/auth.service.js';
 import { cookies } from '#utils/cookies.js';
 import { formatValidationErrors } from '#utils/format.js';
 import { jwttoken } from '#utils/jwt.js';
+import { signupSchema } from '#validations/auth.validation.js';
 
 export const signup = async (req, res, next) => {
   try {
     // validate the data coming into the form
     // req.body contains the user form data
     const validationResult = signupSchema.safeParse(req.body);
+    const formattedErrors = formatValidationErrors(validationResult.error);
 
     // if validation fails, return 400 with the formatted errors
     if (!validationResult.success) {
