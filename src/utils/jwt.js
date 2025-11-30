@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_EXPIRES_IN = '1d';
 
 // utility functions for signing and verifying JWT tokens
-export const jwttokwn = {
+export const jwttoken = {
   // sign a JWT token
   sign: (payload) => {
     try {

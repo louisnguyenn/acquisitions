@@ -1,4 +1,5 @@
 import logger from '#config/logger.js';
+import { createUser } from "#services/auth.service.js";
 import { formatValidationErrors } from '#utils/format.js';
 
 export const signup = async (req, res, next) => {
@@ -16,9 +17,13 @@ export const signup = async (req, res, next) => {
     }
 
     // extract validated data
-    const { name, email, role } = validationResult.data;
+    const { name, email, password, role } = validationResult.data;
 
     // calling auth service to create an account
+    const user = await createUser({ name, email, password, role})
+
+    const token = jwt
+
     logger.info(`User registered successfully: ${email}`);
     res.status(201).json({
       message: 'User registered successfully',
