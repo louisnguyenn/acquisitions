@@ -7,7 +7,7 @@ export const formatValidationErrors = (errors) => {
 
   // handle Zod validation errors and join the errors seperated by commas
   if (Array.isArray(errors.issues)) {
-    return errors.issues.map(((issue) => issue.message).join(', '));
+    return errors.issues.map((issue) => issue.message).join(', ');
   }
 
   // if not an array of issues, return the stringified version of errors
