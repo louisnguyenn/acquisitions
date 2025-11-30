@@ -1,6 +1,8 @@
 import logger from '#config/logger.js';
-import { createUser } from "#services/auth.service.js";
+import { createUser } from '#services/auth.service.js';
+import { cookies } from '#utils/cookies.js';
 import { formatValidationErrors } from '#utils/format.js';
+import { jwttoken } from '#utils/jwt.js';
 
 export const signup = async (req, res, next) => {
   try {
@@ -20,18 +22,27 @@ export const signup = async (req, res, next) => {
     const { name, email, password, role } = validationResult.data;
 
     // calling auth service to create an account
-    const user = await createUser({ name, email, password, role})
+    const user = await createUser({ name, email, password, role });
 
-    const token = jwt
+    // generate JWT token for the newly created user
+    const token = jwttoken.sign({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
+    // set the JWT token in an HTTP-only cookie
+    cookies.set(res, 'token', token);
+
+    // log successful signup with user info
     logger.info(`User registered successfully: ${email}`);
     res.status(201).json({
       message: 'User registered successfully',
       user: {
-        id: 1,
-        name,
-        email,
-        role,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
