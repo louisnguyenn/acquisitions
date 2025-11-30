@@ -20,7 +20,7 @@ export const hashPassword = async (password) => {
 export const createUser = async ({ name, email, password, role = 'user' }) => {
   try {
     // check if user exists in the database
-    const existingUser = db
+    const existingUser = await db
       .select()
       .from(users)
       .where(eq(users.email, email))
@@ -39,7 +39,7 @@ export const createUser = async ({ name, email, password, role = 'user' }) => {
       .values({
         name,
         email,
-        passwordHash,
+        password: passwordHash,
         role,
       })
       .returning({
@@ -56,6 +56,6 @@ export const createUser = async ({ name, email, password, role = 'user' }) => {
   } catch (error) {
     // log the error
     logger.error(`Error creating user: ${error}`);
-    throw new Error('Error creating user');
+    throw error;
   }
 };
