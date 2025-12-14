@@ -36,6 +36,6 @@ npm run db:migrate
 
 echo ""
 echo "Development environment started"
-echo "Application: http://localhost:5173"
+echo "Listening on http://localhost:3000"
 echo "Remote Database: $DATABASE_URL"
 echo "To stop the environment, press Ctrl+C or run: docker compose -f docker-compose.dev.yml down"
