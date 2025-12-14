@@ -18,5 +18,3 @@ export const fetchAllUsers = async (req, res, next) => {
     next(error);
   }
 };
-
-export default fetchAllUsers;
